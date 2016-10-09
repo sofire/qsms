@@ -32,17 +32,19 @@ class Single
         return $this;
     }
 
-    public function normal($content)
+    public function normal($content, $extend = '', $ext = '')
     {
         return $this->client->post($this->apiUrl, [
-            'type'  => $this->type,
-            'sig'   => $this->signature($this->target['phone']),
-            'msg'   => $content,
-            'tel'   => $this->target
+            'type'      => $this->type,
+            'sig'       => $this->signature($this->target['phone']),
+            'msg'       => $content,
+            'tel'       => $this->target,
+            'extend'    => $extend,
+            'ext'       => $ext
         ]);
     }
 
-    public function template($id, $params, $sign = '')
+    public function template($id, $params, $sign = '', $extend = '', $ext = '')
     {
         return $this->client->post($this->apiUrl, [
             'type'      => $this->type,
@@ -50,7 +52,9 @@ class Single
             'tpl_id'    => $id,
             'params'    => $params,
             'sign'      => $sign,
-            'tel'       => $this->target
+            'tel'       => $this->target,
+            'extend'    => $extend,
+            'ext'       => $ext
         ]);
     }
 
