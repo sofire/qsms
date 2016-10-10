@@ -8,7 +8,7 @@
   "type": "library",
   "require": {
     "php": ">=5.1",
-    "ext-curl": "*"
+    "wenpeng/curl": "*"
   },
   "license": "MIT",
   "authors": [
