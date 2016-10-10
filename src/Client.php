@@ -33,18 +33,17 @@ class Client
 
     public function post($url, $params)
     {
-        $rand = microtime(true);
-        $target = "{$url}?sdkappid={$this->appID}&random={$rand}";
-
         $curl = new Curl();
-        $curl->post($params)->url($target);
+        $curl->post(json_encode($params));
+        $curl->url($url .'?sdkappid='. $this->appID .'&random='. microtime(true));
+
         if ($curl->error()) {
             throw new Exception($curl->message());
         }
 
         $data = json_decode($curl->data());
         if ($data === false) {
-            throw new Exception('API返回的JSON异常');
+            throw new Exception('响应数据异常');
         }
         return $data;
     }

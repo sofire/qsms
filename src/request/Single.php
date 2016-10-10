@@ -19,7 +19,7 @@ class Single
 
     public function __construct(Client $client, $type = 0)
     {
-        $this->type = $type;
+        $this->type = (int) $type;
         $this->client = $client;
     }
 
@@ -34,9 +34,10 @@ class Single
 
     public function normal($content, $extend = '', $ext = '')
     {
+        $sign = $this->sign($this->target['phone']);
         return $this->client->post($this->apiUrl, [
             'type'      => $this->type,
-            'sig'       => $this->signature($this->target['phone']),
+            'sig'       => $sign,
             'msg'       => $content,
             'tel'       => $this->target,
             'extend'    => $extend,
@@ -46,10 +47,11 @@ class Single
 
     public function template($id, $params, $sign = '', $extend = '', $ext = '')
     {
+        $sign = $this->sign($this->target['phone']);
         return $this->client->post($this->apiUrl, [
             'type'      => $this->type,
-            'sig'       => $this->signature($this->target['phone']),
-            'tpl_id'    => $id,
+            'sig'       => $sign,
+            'tpl_id'    => (int) $id,
             'params'    => $params,
             'sign'      => $sign,
             'tel'       => $this->target,
@@ -58,7 +60,7 @@ class Single
         ]);
     }
 
-    private function signature($phone)
+    private function sign($phone)
     {
         return md5($this->client->appKey() . $phone);
     }
