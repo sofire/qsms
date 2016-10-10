@@ -34,10 +34,10 @@ class Single
 
     public function normal($content, $extend = '', $ext = '')
     {
-        $sign = $this->sign($this->target['phone']);
+        $sig = $this->sig($this->target['phone']);
         return $this->client->post($this->apiUrl, [
             'type'      => $this->type,
-            'sig'       => $sign,
+            'sig'       => $sig,
             'msg'       => $content,
             'tel'       => $this->target,
             'extend'    => $extend,
@@ -47,10 +47,10 @@ class Single
 
     public function template($id, $params, $sign = '', $extend = '', $ext = '')
     {
-        $sign = $this->sign($this->target['phone']);
+        $sig = $this->sig($this->target['phone']);
         return $this->client->post($this->apiUrl, [
             'type'      => $this->type,
-            'sig'       => $sign,
+            'sig'       => $sig,
             'tpl_id'    => (int) $id,
             'params'    => $params,
             'sign'      => $sign,
@@ -60,7 +60,7 @@ class Single
         ]);
     }
 
-    private function sign($phone)
+    private function sig($phone)
     {
         return md5($this->client->appKey() . $phone);
     }
