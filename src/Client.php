@@ -41,7 +41,7 @@ class Client
             throw new Exception($curl->message());
         }
 
-        $data = json_decode($curl->data());
+        $data = json_decode($curl->data(), true);
         if ($data === false) {
             throw new Exception('响应数据异常');
         }
