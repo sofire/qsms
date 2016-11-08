@@ -8,7 +8,7 @@
 namespace Wenpeng\Qsms;
 
 use Exception;
-use Wenpeng\Curl;
+use Wenpeng\Curl\Curl;
 
 class Client
 {

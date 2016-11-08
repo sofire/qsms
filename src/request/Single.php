@@ -23,11 +23,11 @@ class Single
         $this->client = $client;
     }
 
-    public function target($phone, $nation = 86)
+    public function target($phone, $nation = '86')
     {
         $this->target = [
-            'nationcode' => $nation,
-            'phone'      => $phone
+            'nationcode' => (string) $nation,
+            'phone'      => (string) $phone
         ];
         return $this;
     }
