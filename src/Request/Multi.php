@@ -5,9 +5,9 @@
  * Create: 2016/10/9 下午5:36
  */
 
-namespace Sofire\Qsms\Request;
+namespace Wenpeng\Qsms\Request;
 
-use Sofire\Qsms\Client;
+use Wenpeng\Qsms\Client;
 
 class Single
 {
@@ -15,7 +15,7 @@ class Single
 
     private $type = 0;
     private $target = [];
-    private $apiUrl = 'https://yun.tim.qq.com/v5/tlssmssvr/sendsms';
+    private $apiUrl = 'https://yun.tim.qq.com/v3/tlssmssvr/sendsms';
 
     public function __construct(Client $client, $type = 0)
     {
@@ -23,25 +23,22 @@ class Single
         $this->client = $client;
     }
 
-    public function target($mobile, $nation = '86')
+    public function target($phone, $nation = '86')
     {
         $this->target = [
             'nationcode' => (string)$nation,
-            'mobile'     => (string)$mobile
+            'mobile'     => (string)$phone
         ];
         return $this;
     }
 
     public function normal($content, $extend = '', $ext = '')
     {
-        $random = microtime(true);
-        $time = time();
-        $sig = $this->sig_sha256($this->target['mobile'], $random, $time);
-
-        return $this->client->post($this->apiUrl . "?random=" . $random, [
+        $sig = $this->sig($this->target['phone']);
+        return $this->client->post($this->apiUrl, [
             'type'   => $this->type,
             'sig'    => $sig,
-            'time'   => $time,
+            'time'   => time(),
             'msg'    => $content,
             'tel'    => $this->target,
             'extend' => $extend,
@@ -51,31 +48,22 @@ class Single
 
     public function template($id, $params, $sign = '', $extend = '', $ext = '')
     {
-        $random = $this->random;
-        $time = time();
-        $sig = $this->sig_sha256($this->target['mobile'], $random, $time);
-
+        $sig = $this->sig($this->target['phone']);
         return $this->client->post($this->apiUrl, [
             'type'   => $this->type,
             'sig'    => $sig,
             'tpl_id' => (int)$id,
             'params' => $params,
             'sign'   => $sign,
-            'time'   => $time,
+            'time'   => time(),
             'tel'    => $this->target,
             'extend' => $extend,
             'ext'    => $ext
         ]);
     }
 
-    private function sig($mobile)
+    private function sig($phone)
     {
-        return md5($this->client->appKey() . $mobile);
-    }
-
-    private function sig_sha256($mobile, $random, $time)
-    {
-        $str = "appkey=" . $this->client->appKey() . "&random=$random&time=$time&mobile=$mobile";
-        return hash('sha256', $str);
+        return md5($this->client->appKey() . $phone);
     }
 }

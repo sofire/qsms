@@ -1,10 +1,10 @@
 {
-  "name": "wenpeng/qsms",
+  "name": "sofire/qsms",
   "description": "腾讯云Qcloud短信服务第三方SDK",
   "keywords": [
     "Qcloud SMS SDK"
   ],
-  "homepage": "https://github.com/wenpeng/qsms",
+  "homepage": "https://github.com/sofire/qsms",
   "type": "library",
   "require": {
     "php": ">=5.1",
@@ -20,7 +20,7 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "Wenpeng\\Qsms\\": "src/"
+      "Sofire\\Qsms\\": "src/"
     }
   }
 }

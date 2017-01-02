@@ -5,7 +5,7 @@
  * Create: 2016/10/9 下午4:51
  */
 
-namespace Wenpeng\Qsms;
+namespace Sofire\Qsms;
 
 use Exception;
 use Wenpeng\Curl\Curl;
@@ -35,7 +35,7 @@ class Client
     {
         $curl = new Curl();
         $curl->post(json_encode($params));
-        $curl->url($url .'?sdkappid='. $this->appID .'&random='. microtime(true));
+        $curl->url($url . '&sdkappid=' . $this->appID);
 
         if ($curl->error()) {
             throw new Exception($curl->message());
