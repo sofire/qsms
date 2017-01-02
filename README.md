@@ -1,3 +1,9 @@
+# Update
+2017年01月02日：
+参考 https://github.com/wenpeng/qsms
+根据腾讯云 v5版本 的API做的修改
+添加群发接口
+
 # 简述
 腾讯云Qcloud短信服务第三方SDK
 

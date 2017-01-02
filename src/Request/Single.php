@@ -55,7 +55,7 @@ class Single
         $time = time();
         $sig = $this->sig_sha256($this->target['mobile'], $random, $time);
 
-        return $this->client->post($this->apiUrl, [
+        return $this->client->post($this->apiUrl . "?random=" . $random, [
             'type'   => $this->type,
             'sig'    => $sig,
             'tpl_id' => (int)$id,
